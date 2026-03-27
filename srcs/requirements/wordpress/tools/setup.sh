@@ -30,6 +30,7 @@ chmod +x /tmp/wp-cli/phar
 mv /tmp/wp-cli.phar  /usr/local/bin/wp
 
 #create  wp-config.php  automatically \\ reads  from  .env file
+#insdie  a docker  we  run  as  root  --allow-root  without  it  WP-CLI wernt  work security  warning
 wp config  create\
     --path=/var/www/html\
     --dbname=$MYSQL_DATABASE\
@@ -38,7 +39,7 @@ wp config  create\
     --dbhost=mariadb:3306\
     --allow-root
 
-#install word press  on  mariadb
+#  use  mysql  to  connect  the  wordpress withmariadb with  the user  we  create
 wp core  install \
     --path=/var/www/html\
     --url=https://$DOMAIN_NAME\
