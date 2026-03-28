@@ -13,7 +13,7 @@ RUN  apt-get  update  &&  apt-get  install  -y \
 
 COPY conf/maria.cnf  /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY tools/setup.sh  /setup.sh
+COPY tools/entrypoint.sh  /setup.sh
 
 RUN  chmod +x  /setup.sh
 

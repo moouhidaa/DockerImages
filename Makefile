@@ -4,8 +4,8 @@ DATA_PATH =  /home/moouhida/data
 
 
 all :
-	@mkdir  =p $(DATA_PATH)/mysql
-	@mkdir  =p $(DATA_PATH)/wordpress
+	@mkdir  -p $(DATA_PATH)/mysql
+	@mkdir  -p $(DATA_PATH)/wordpress
 	@docker-compose  -f $(COMPOSE_FILE) up --build  -d
  # -f  use  thespecif folder 
  #up  start all  teh containers 

@@ -19,7 +19,7 @@ services:
       - db_password
       - db_root_password
     volumes:
-      -db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
     networks:
       - inception
     restart  : always
@@ -32,7 +32,7 @@ services:
       - db_password
       - credentails
     volumes:
-      -wp_data:/var/www/html
+      - wp_data:/var/www/html
     networks:
       - inception
     depends_on:
@@ -41,7 +41,7 @@ services:
   nginx :
     build: ./requirements/nginx
     container_name: nginx
-    port :
+    ports :
      - "433:433"
     volumes:
       - wp_data:/var/www/html
@@ -58,5 +58,20 @@ networks:
 volumes:
   db_data:
     driver: local
-  dp_data:
-    driver:  local
+    driver_opts :
+      type : none
+      o : bind
+      device  : /home/moouhida/data/mysql
+  wp_data :  
+      driver :  local
+      driver_opts :
+        type :  none
+        o : bind
+        device  : /home/moouhida/data/wordpress
+
+#driver  :  local
+#told  the docker where to save  the  data(other  option  it can  be stored  on : nfs tmpfs s3 azure (another  mashine via ssh))
+#and  device the exact  path  were  data  get  saved
+#type  none  type  of  filesystem  (how  to  read and  write data)
+#we confirm it with none cuaseteh  file already exisct  and  created  by  makefile so  the  filesystem already exist
+#o =  option  bind ->  defualt  for read  and write  its  just permission  for  that file
