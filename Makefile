@@ -12,7 +12,7 @@ all :
  # --builds  =  rebuild images from dockerfiles
  #-d  = backgroud  (detached mode)
 down :
-	@docker_compose -f  $(COMPOSE_FILE) down
+	@docker-compose -f  $(COMPOSE_FILE) down
 
 clean :
 	@docker-compose  -f  $(COMPOSE_FILE) down  --rmi  all
