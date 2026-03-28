@@ -18,7 +18,7 @@ clean :
 	@docker-compose  -f  $(COMPOSE_FILE) down  --rmi  all
 
 fclean : clean
-	@rm  =rf  $(DATA_PATH)
+	@rm  -rf  $(DATA_PATH)
 	@docker  system  prume  -af
 
 re : fclean all
