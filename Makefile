@@ -19,7 +19,7 @@ clean :
 
 fclean : clean
 	@rm  -rf  $(DATA_PATH)
-	@docker  system  prume  -af
+	@docker  system  prune  -af
 
 re : fclean all
 
