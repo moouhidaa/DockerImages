@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #  wait for  mariadb  ro be  ready
 #docker-compose up starts all  the containers at  once so  mariadb  not  were be  ready yey
@@ -6,9 +6,9 @@ sleep 5
 
 
 #download  the  wordpress  if not  already  installed
-if [! -f /var/html/wp-config-php];  then
+if [ ! -f /var/www/html/wp-config.php ];  then
 
-    wget -q https://wordpress.org/latest.tar.gz -p /tmp
+    wget -q https://wordpress.org/latest.tar.gz -P /tmp
     tar -xzf  /tmp/latest.tar.gz -C /tmp/
     #need more explaination
     mv  /tmp/wordpress/*  /var/www/html/
@@ -24,29 +24,29 @@ if [! -f /var/html/wp-config-php];  then
 #wp theme install    → install themes
 #wp db export        → backup database
 #wp config create    → create wp-config.php
-wget  -q  https:raw/githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
-chmod +x /tmp/wp-cli/phar
+wget  -q  https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
+chmod +x /tmp/wp-cli.phar
 #move  it  ot  that  directory  so we can  use  wp anywhere
 mv /tmp/wp-cli.phar  /usr/local/bin/wp
 
 #create  wp-config.php  automatically \\ reads  from  .env file
 #insdie  a docker  we  run  as  root  --allow-root  without  it  WP-CLI wernt  work security  warning
-wp config  create\
-    --path=/var/www/html\
-    --dbname=$MYSQL_DATABASE\
-    --dbuser=$MYSQL_USER\
-    --dbpass=$MYSQL_PASSWORD\
-    --dbhost=mariadb:3306\
+wp config  create \
+    --path=/var/www/html \
+    --dbname=$MYSQL_DATABASE \
+    --dbuser=$MYSQL_USER \
+    --dbpass=$MYSQL_PASSWORD \
+    --dbhost=mariadb:3306 \
     --allow-root
 
 #  use  mysql  to  connect  the  wordpress withmariadb with  the user  we  create
 wp core  install \
-    --path=/var/www/html\
-    --url=https://$DOMAIN_NAME\
-    --title="Inception"\
+    --path=/var/www/html \
+    --url=https://$DOMAIN_NAME \
+    --title="Inception" \
     --admin_user=$WORDPRESS_ADMIN \
-    --admin_password=$WORDPRESS_ADMIN_PASSWORD\
-    --admin_email=$WORDPRESS_ADMIN_EMAIL\
+    --admin_password=$WORDPRESS_ADMIN_PASSWORD \
+    --admin_email=$WORDPRESS_ADMIN_EMAIL \
     --allow-root
 #create  another  user
 #role one  not  an  admin  limited  permissions  
@@ -54,7 +54,7 @@ wp  user  create \
     $WORDPRESS_USER \
     $WORDPRESS_USER_EMAIL \
     --role=author \
-    --user+pass=$WORDPRESS_USER_PASSWORD \
+    --user_pass=$WORDPRESS_USER_PASSWORD \
     --allow-root
 
 #WE SHOULD  RUN  the php-fppm as pid1 not as a  child to get  the signlas  properly

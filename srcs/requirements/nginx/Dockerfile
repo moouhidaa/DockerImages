@@ -8,14 +8,16 @@ RUN apt-get update && apt-get install  -y \
     openssl\
     && rm -rf /var/lib/apt/lists/*
 
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 COPY tools/generate-certs.sh /generate-certs.sh
 
-RUN  chmod +x /generate-certs.sh 
+RUN  chmod +x /generate-certs.sh  && /generate-certs.sh
 
 EXPOSE   443
 
-CMD   ["nginx" , "g", "daemon off;"] #  run every time container  starts and the above  ones  tun  once
+#by default  run  in the  background
+CMD   ["nginx" , "-g", "daemon off;"]
+ #  run every time container  starts and the above  ones  tun  once
 #and  the container are  a live as  long as CMD is running
 #daemon off = nginx  stay  in foreground  docker see it  and  the container stay alive

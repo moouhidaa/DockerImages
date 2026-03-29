@@ -30,6 +30,6 @@ status  :
 #logs for debugging errrors
 
 logs:
-	$docker-compose -f  $(COMPOSE_FILE) logs
+	@docker-compose -f  $(COMPOSE_FILE) logs
 
-.PHONY :  all  doen  clean  fclean  re  status  logs
+.PHONY :  all  down  clean  fclean  re  status  logs

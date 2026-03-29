@@ -8,17 +8,17 @@ pid-file  =  /run/mysqld/mysqld.pid
 
 #unix  socket  file  used  for  local  connections
 #automaticllt  crate  when  MYsql  start
-socket =  /run/mysqld/mysqld.socket
+socket =  /run/mysqld/mysqld.sock
 
 #tcp  network  for network
 port  =  3306
 
-#data  directory  where  MYsal  store  data  tables  index and  binary  logs
+#data  directory  where  MYsql  store  data  tables  index and  binary  logs
 datadir = /var/lib/mysql
 
 #mysql  listen  on all ip  adresses  if  firewall allow it
 #but  for  savety  i will allow  just  loacl  host  
-bind-address = 127.0.0.1
+bind-address = 0.0.0.0
 
 #disable symbolic  links  ..  avoid  access  to  the files  outside  the MYsqldata  directory
 skip-symbolic-links
@@ -38,7 +38,7 @@ plugin-load-add = ed25519
 #Force strong passwords  
 
 plugin-load-add  =  simple_password_check
-simple_password_check_minimum_lenght =  10 
+simple_password_check_minimum_length =  10 
 simple_password_check_digits = 1
 simple_password_check_letters_same_case = 1
 
@@ -48,7 +48,7 @@ simple_password_check_letters_same_case = 1
 plugin-load-add  =  file_key_managemet
 file_key_management_filename =  /etc/mysql/encryption/file_key_management_filename
 innodb_encrypt_tables = on
-innodb_encypy_log = on
+innodb_encrypt_log = on
 
 
 #track  who  does  what  
