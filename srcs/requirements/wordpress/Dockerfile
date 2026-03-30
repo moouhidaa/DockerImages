@@ -11,6 +11,7 @@ RUN  apt-get update  && apt-get  install  -y\
         php-zip\
         php-zip\
         wget\
+        default-mysql-client \
         && rm -rf  /var/lib/apt/lists/*
  COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 

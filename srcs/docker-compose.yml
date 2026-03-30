@@ -53,6 +53,15 @@ services:
       - wordpress
     restart: always
 
+  redis:
+    build : ./requirements/bonus/redis
+    container_name: redis
+    restart:  unless-stopped
+    networks:
+    - inception
+    depends_on:
+    - wordpress
+
 networks:
   inception:
     driver: bridge
