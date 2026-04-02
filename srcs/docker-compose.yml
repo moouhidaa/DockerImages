@@ -87,6 +87,14 @@ services:
       - .env
     depends_on:
       - wordpress
+  backup:
+    build: ./requirements/back-up
+    conatinaer:  backup
+    networks:
+      - inception
+    volumes:
+      - wp_data:/var/www/html
+      - ./backups:/backups
 networks:
   inception:
     driver: bridge
