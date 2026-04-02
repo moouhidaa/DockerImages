@@ -71,7 +71,22 @@ services:
       - inception
     depends_on:
       - mariadb
-
+  ftp:
+    build: ./requirements/bonus/ftp
+    container_name: ftp
+    restart: unless-stopped
+    ports:
+      - "21"
+      - "20"
+      - "30000-31000"
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
 networks:
   inception:
     driver: bridge
