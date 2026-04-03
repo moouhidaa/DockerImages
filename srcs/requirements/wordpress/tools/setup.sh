@@ -3,7 +3,8 @@
 #  wait for  mariadb  ro be  ready
 #docker-compose up starts all  the containers at  once so  mariadb  not  were be  ready ye
 until  mysqladmin ping -h  mariadb  --silent  2>/dev/null; do  sleep 1; done
-cat $?
+
+MYSQL_PASSWORD=$(cat /run/secrets/db_password)
 
 if [ ! -f /var/www/html/wp-config.php ];  then
 
@@ -15,6 +16,7 @@ if [ ! -f /var/www/html/wp-config.php ];  then
     wget  -q  https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
     chmod +x /tmp/wp-cli.phar
     mv /tmp/wp-cli.phar  /usr/local/bin/wp
+
     wp config  create \
         --path=/var/www/html \
         --dbname=$MYSQL_DATABASE \
@@ -27,16 +29,16 @@ if [ ! -f /var/www/html/wp-config.php ];  then
         --path=/var/www/html \
         --url=https://$DOMAIN_NAME \
         --title="Inception" \
-        --admin_user=$WORDPRESS_ADMIN \
-        --admin_password=$WORDPRESS_ADMIN_PASSWORD \
-        --admin_email=$WORDPRESS_ADMIN_EMAIL \
+        --admin_user=$WP_ADMIN \
+        --admin_password=$WP_ADMIN_PASSWORD \
+        --admin_email=$WP_ADMIN_EMAIL \
         --allow-root
 
     wp  user  create \
-        $WORDPRESS_USER \
-        $WORDPRESS_USER_EMAIL \
+        $WP_PRESS_USER \
+        $WP_PRESS_USER_EMAIL \
         --role=author \
-        --user_pass=$WORDPRESS_USER_PASSWORD \
+        --user_pass=$WP_PRESS_USER_PASSWORD \
         --allow-root
 
     wp config  set  WP_REDIS_HOST redis --allow-root

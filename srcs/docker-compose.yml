@@ -88,13 +88,20 @@ services:
     depends_on:
       - wordpress
   backup:
-    build: ./requirements/back-up
-    conatinaer:  backup
+    build: ./requirements/backup
+    conatinaer: backup
     networks:
       - inception
+    depends_on:
+      - wordpress
+      - mariadb
+    secrests:
+      - db_password
+    env_file:
+      - .env
     volumes:
       - wp_data:/var/www/html
-      - ./backups:/backups
+      - ./back_up:/backups
 networks:
   inception:
     driver: bridge
@@ -112,3 +119,9 @@ volumes:
       type: none
       o: bind
       device: /home/moouhida/data/wordpress
+  back_up:
+    driver:  local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/moouhida/data/backups

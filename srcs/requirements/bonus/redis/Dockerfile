@@ -9,6 +9,4 @@ RUN chmod  +x /entrypoint.sh
 
 EXPOSE  6379
 
-
-
 ENTRYPOINT [ "/entrypoint.sh" ]
