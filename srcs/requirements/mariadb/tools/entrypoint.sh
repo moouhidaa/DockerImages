@@ -3,7 +3,6 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
 mysqld_safe &
-
 #wiat for  mariadb to  fully start /wihtout  it  next  command  whoule  run  before  mariadb  and  fail
 until  mysqladmin  ping  --silent ;  do  sleep 1;done
 
