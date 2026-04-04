@@ -88,8 +88,8 @@ services:
     depends_on:
       - wordpress
   backup:
-    build: ./requirements/backup
-    conatinaer: backup
+    build: ./requirements/bonus/backup
+    container_name: backup
     networks:
       - inception
     depends_on:
@@ -101,7 +101,7 @@ services:
       - .env
     volumes:
       - wp_data:/var/www/html
-      - ./back_up:/backups
+      - ./backup:/backup
 networks:
   inception:
     driver: bridge
