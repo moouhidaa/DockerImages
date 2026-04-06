@@ -51,10 +51,11 @@ if [ ! -f /var/www/html/wp-config.php ];  then
         --allow-root
     #allow wp-cli  run  as root  wihtout  any  problems
     wp config  set  WP_REDIS_HOST redis --allow-root
+    #raw = save it  a number not string
     wp config  set  WP_REDIS_PORT 6379 --raw --allow-root
-    wp config set WP_CASH true --raw --allow-root
+    wp config set WP_CASHE true --raw --allow-root
 
-    wp plgin install redis-cashe --activate --allow-root
-    wp redis  enabe  --allow-root
+    wp plgin install redis-cache --activate --allow-root
+    wp redis  enable  --allow-root
 fi
  exec  /usr/sbin/php-fpm8.2  -F
