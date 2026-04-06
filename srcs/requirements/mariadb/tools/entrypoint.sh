@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#mariadb  needs  that file to create her socket file
 mkdir -p /run/mysqld 
 chown -R mysql:mysql /run/mysqld
 
