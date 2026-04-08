@@ -1,4 +1,3 @@
-version: '3'
 
 secrets:
   db_password:
@@ -95,7 +94,7 @@ services:
     depends_on:
       - wordpress
       - mariadb
-    secrests:
+    secrets:
       - db_password
     env_file:
       - .env

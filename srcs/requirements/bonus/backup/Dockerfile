@@ -1,8 +1,8 @@
 FROM  debian:bookworm
 
-RUN   apt upgrade && apt install \
+RUN  apt-get  update && apt upgrade -y && apt install -y\
         mariadb-client \
-        cron  &&  rm -rf /var/lib/apt/lists/* 
+        &&  rm -rf /var/lib/apt/lists/* 
 RUN  mkdir -p /home/moouhida/data/backup
 
 COPY tools/backup.sh  /backup.sh
