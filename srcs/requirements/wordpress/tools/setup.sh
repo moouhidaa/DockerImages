@@ -1,8 +1,4 @@
 #!/bin/bash
-
-#  wait for  mariadb  ro be  ready
-
-#docker-compose up starts all  the containers at  once so  mariadb  not  were be  ready ye
 until mysqladmin  ping  -h  mariadb --silent; do
     echo "waiting for  mariadb"
     sleep 3

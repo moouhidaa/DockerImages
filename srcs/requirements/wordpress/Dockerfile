@@ -10,6 +10,7 @@ RUN  apt-get update  && apt-get  install  -y\
         php-xml\
         php-zip\
         php-zip\
+        sendmail\
         wget\
         default-mysql-client \
         && rm -rf  /var/lib/apt/lists/*

@@ -15,6 +15,7 @@ EXPOSE  3306
 COPY tools/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
 CMD ["mysqld"]
 #mariadb-server install :
 #  mysqld  the  database  engine 
