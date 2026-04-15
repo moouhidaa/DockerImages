@@ -3,14 +3,17 @@
 #  wait for  mariadb  ro be  ready
 
 #docker-compose up starts all  the containers at  once so  mariadb  not  were be  ready ye
-until  mysqladmin ping -h  mariadb  --silent  2>/dev/null; do  sleep 1; done
+until mysqladmin  ping  -h  mariadb --silent; do
+    echo "waiting for  mariadb"
+    sleep 3
+done
 
-WP_ADMIN=$(cat 'NR=1{print $1}' /run/secrets/credentials |  cut -d= -f2)
-WP_ADMIN_PASSWORD=$(cat 'NR=2{print $1}' /run/secrets/credentials |  cut -d= -f2)
-WP_ADMIN_EMAIL=$(cat 'NR=3{print $1}' /run/secrets/credentials |  cut -d= -f2)
-WP_USER=$(cat  'NR=4{print $1}' /run/secrets/credentials | cut -d= -f2)
-WP_USER_PASSWORD=$(cat  'NR=5{print $1}' /run/secrets/credentials | cut -d= -f2)
-WP_PRESS_USER_EMAIL=$(cat 'NR=5{print $1}' /run/secrets/credentials | cut -d= -f2)
+WP_ADMIN=$(grep '^WP_ADMIN=' /run/secrets/credentials |  cut -d= -f2)
+WP_ADMIN_PASSWORD=$(grep '^WP_ADMIN_PASSWORD=' /run/secrets/credentials |  cut -d= -f2)
+WP_ADMIN_EMAIL=$(grep 'WP_ADMIN_EMAIL=' /run/secrets/credentials |  cut -d= -f2)
+WP_USER=$(grep 'WP_USER=' /run/secrets/credentials | cut -d= -f2)
+WP_USER_PASSWORD=$(grep  'WP_USER_PASSWORD=' /run/secrets/credentials | cut -d= -f2)
+WP_USER_EMAIL=$(grep '^WP_USER_EMAIL=' /run/secrets/credentials | cut -d= -f2)
 
 
 MYSQL_PASSWORD=$(cat /run/secrets/db_password)
@@ -44,10 +47,10 @@ if [ ! -f /var/www/html/wp-config.php ];  then
         --allow-root
 
     wp  user  create \
-        $WP_PRESS_USER \
-        $WP_PRESS_USER_EMAIL \
+        $WP_USER \
+        $WP_USER_EMAIL \
         --role=author \
-        --user_pass=$WP_PRESS_USER_PASSWORD \
+        --user_pass=$WP_USER_PASSWORD \
         --allow-root
     #allow wp-cli  run  as root  wihtout  any  problems
     wp config  set  WP_REDIS_HOST redis --allow-root
@@ -55,7 +58,7 @@ if [ ! -f /var/www/html/wp-config.php ];  then
     wp config  set  WP_REDIS_PORT 6379 --raw --allow-root
     wp config set WP_CASHE true --raw --allow-root
 
-    wp plgin install redis-cache --activate --allow-root
+    wp plugin install redis-cache --activate --allow-root
     wp redis  enable  --allow-root
 fi
  exec  /usr/sbin/php-fpm8.2  -F

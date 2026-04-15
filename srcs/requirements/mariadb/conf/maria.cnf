@@ -1,64 +1,16 @@
 [mysqld]
+user = mysql
 
-#create  an  user  with no  root  to  increase the security
-user  =  mysql
+pid-file = /run/mysqld/mysqld.pid
 
-#write  the  process  id  on that  file  ro  stopr  restart  MYSQL // HELP  ensuring wont  kill  wrong  provess
-pid-file  =  /run/mysqld/mysqld.pid
+socket = /run/mysqld/mysqld.sock
 
-#unix  socket  file  used  for  local  connections
-#automaticllt  crate  when  MYsql  start
-socket =  /run/mysqld/mysqld.sock
+port = 3306
 
-#tcp  network  for network
-port  =  3306
-
-#data  directory  where  MYsql  store  data  tables  index and  binary  logs
 datadir = /var/lib/mysql
 
-#mysql  listen  on all ip  adresses  if  firewall allow it
-#but  for  savety  i will allow  just  loacl  host  
 bind-address = 0.0.0.0
 
-#disable symbolic  links  ..  avoid  access  to  the files  outside  the MYsqldata  directory
 skip-symbolic-links
-
-#enforce  strict  SQL rules && improve  thedatabase  intergrity
-
-#keeps  a record  of  all  MySQL  errors
-log-error
-
-#help detect potential  attacks  or  performanxe  issues
-slow-query-log  
-
-#authentification Pluging  
-#ccontrol   how  password  are stored  abd  verified
-plugin-load-add = ed25519
-
-#Force strong passwords  
-
-plugin-load-add  =  simple_password_check
-simple_password_check_minimum_length =  10 
-simple_password_check_digits = 1
-simple_password_check_letters_same_case = 1
-
-
-
-#protect data on the  disk  
-plugin-load-add  =  file_key_managemet
-file_key_management_filename =  /etc/mysql/encryption/file_key_management_filename
-innodb_encrypt_tables = on
-innodb_encrypt_log = on
-
-
-#track  who  does  what  
-#who connected  what  sql command  he uses  and what  table that  he accessed
-plugin-load-add =  server_audit
-server_audit_logging = on
-server_audit_events =  CONNECT ,QUERY,tables
-
-#rejected  if  someone  try  to  guess your  password
-connections_control_failed_connection_threshold = 5
-connections_control_min_connection_delay = 3000
 
 skip-networking = OFF

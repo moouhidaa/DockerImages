@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN  apt-get  update && apt upgrade && apt  install  -y \
+RUN  mkdir -p /var/www/html && apt-get update && apt-get upgrade -y && apt  install  -y \
                 php \
                 php-mysqli \
                 wget \

@@ -1,6 +1,6 @@
 FROM   debian:bookworm
 
-RUN apt-get  update && apt-get install  -y redis &&  rm -rf /var/apt/lists/*
+RUN apt-get update && apt-get upgrade -y && apt-get install  -y redis &&  rm -rf /var/apt/lists/*
 
 COPY conf/redis.conf  /etc/redis/redis.conf
 COPY tools/entrypoint.sh /entrypoint.sh

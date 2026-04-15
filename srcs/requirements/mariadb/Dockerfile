@@ -6,7 +6,7 @@ FROM  debian:bookworm
 #gives  permission
 #listens  on the  port  3306
 #talks  to  wordpress  only
-RUN apt-get update && apt-get install -y  mariadb-server && rm -rf /var/lib/apt/lists/* 
+RUN apt-get update && apt-get upgrade -y && apt-get install -y  mariadb-server && rm -rf /var/lib/apt/lists/* 
 
 COPY conf/maria.cnf  /etc/mysql/mariadb.conf.d/50-server.cnf
 

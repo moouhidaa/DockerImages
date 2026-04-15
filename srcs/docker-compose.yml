@@ -21,7 +21,7 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - inception
-    restart: always
+    restart: on-failure
 
   wordpress:
     build: ./requirements/wordpress
@@ -37,7 +37,7 @@ services:
       - inception
     depends_on:
       - mariadb
-    restart: always
+    restart: on-failure
 
   nginx:
     build: ./requirements/nginx
@@ -50,7 +50,7 @@ services:
       - inception
     depends_on:
       - wordpress
-    restart: always
+    restart: on-failure
 
   redis:
     build : ./requirements/bonus/redis
@@ -77,7 +77,7 @@ services:
     ports:
       - "21"
       - "20"
-      - "30000-31000"
+      - "30000-30010"
     volumes:
       - wp_data:/var/www/html
     networks:
@@ -86,6 +86,8 @@ services:
       - .env
     depends_on:
       - wordpress
+    secrets:
+      - credentials
   backup:
     build: ./requirements/bonus/backup
     container_name: backup
@@ -101,8 +103,10 @@ services:
     volumes:
       - wp_data:/var/www/html
       - ./backup:/backup
+    restart: on-failure
 networks:
   inception:
+    name: inception
     driver: bridge
 
 volumes:
@@ -124,3 +128,4 @@ volumes:
       type: none
       o: bind
       device: /home/moouhida/data/backups
+
