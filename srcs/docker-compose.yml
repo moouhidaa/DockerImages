@@ -10,6 +10,7 @@ secrets:
 services:
 
   mariadb:
+    image: mariadb
     build: ./requirements/mariadb
     container_name: mariadb
     env_file:
@@ -24,6 +25,7 @@ services:
     restart: on-failure
 
   wordpress:
+    image: wordpress
     build: ./requirements/wordpress
     container_name: wordpress
     env_file:
@@ -40,6 +42,7 @@ services:
     restart: on-failure
 
   nginx:
+    image: nginx
     build: ./requirements/nginx
     container_name: nginx
     ports:
@@ -53,6 +56,7 @@ services:
     restart: on-failure
 
   redis:
+    image: redis
     build : ./requirements/bonus/redis
     container_name: redis
     restart:  unless-stopped
@@ -61,6 +65,7 @@ services:
     depends_on:
     - wordpress
   adminer:
+    image: adminer
     build: ./requirements/bonus/adminer
     container_name: adminer
     restart: unless-stopped
@@ -71,6 +76,7 @@ services:
     depends_on:
       - mariadb
   ftp:
+    image: ftp
     build: ./requirements/bonus/ftp
     container_name: ftp
     restart: unless-stopped
@@ -89,6 +95,7 @@ services:
     secrets:
       - credentials
   backup:
+    image: backup
     build: ./requirements/bonus/backup
     container_name: backup
     networks:
