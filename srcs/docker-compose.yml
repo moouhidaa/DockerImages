@@ -81,9 +81,8 @@ services:
     container_name: ftp
     restart: unless-stopped
     ports:
-      - "21"
-      - "20"
-      - "30000-30010"
+      - "21:21"
+      - "30000-30010:30000-30010"
     volumes:
       - wp_data:/var/www/html
     networks:
@@ -109,7 +108,7 @@ services:
       - .env
     volumes:
       - wp_data:/var/www/html
-      - ./backup:/backup
+      - backup:/backup
     restart: on-failure
 networks:
   inception:
@@ -129,10 +128,10 @@ volumes:
       type: none
       o: bind
       device: /home/moouhida/data/wordpress
-  back_up:
+  backup:
     driver:  local
     driver_opts:
       type: none
       o: bind
-      device: /home/moouhida/data/backups
+      device: /home/moouhida/data/backup
 

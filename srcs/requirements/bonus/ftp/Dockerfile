@@ -11,6 +11,6 @@ COPY tools/entrypoint.sh   /entrypoint.sh
 
 RUN chmod +x  /entrypoint.sh
 
-EXPOSE 21 20  30000-30010
+EXPOSE 21   30000-30010
 
 ENTRYPOINT [ "/entrypoint.sh" ]

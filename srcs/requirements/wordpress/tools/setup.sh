@@ -24,6 +24,7 @@ if [ ! -f /var/www/html/wp-config.php ];  then
     wget  -q  https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
     chmod +x /tmp/wp-cli.phar
     mv /tmp/wp-cli.phar  /usr/local/bin/wp
+     cd /var/www/html
 
     wp config  create \
         --path=/var/www/html \
@@ -48,13 +49,15 @@ if [ ! -f /var/www/html/wp-config.php ];  then
         --role=author \
         --user_pass=$WP_USER_PASSWORD \
         --allow-root
-    #allow wp-cli  run  as root  wihtout  any  problems
+
     wp config  set  WP_REDIS_HOST redis --allow-root
-    #raw = save it  a number not string
+   
     wp config  set  WP_REDIS_PORT 6379 --raw --allow-root
+
     wp config set WP_CASHE true --raw --allow-root
 
     wp plugin install redis-cache --activate --allow-root
+    
     wp redis  enable  --allow-root
 fi
  exec  /usr/sbin/php-fpm8.2  -F

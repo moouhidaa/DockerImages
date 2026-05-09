@@ -6,11 +6,9 @@ DATA_PATH =  /home/moouhida/data
 all :
 	@mkdir  -p $(DATA_PATH)/mysql
 	@mkdir  -p $(DATA_PATH)/wordpress
+	@mkdir  -p $(DATA_PATH)/backup
 	@docker-compose  -f $(COMPOSE_FILE) up --build  -d
- # -f  use  thespecif folder 
- #up  start all  teh containers 
- # --builds  =  rebuild images from dockerfiles
- #-d  = backgroud  (detached mode)
+
 down :
 	@docker-compose -f  $(COMPOSE_FILE) down
 
@@ -23,11 +21,10 @@ fclean : clean
 
 re : fclean all
 
-#show all the running containers
+
 status  :
 	@docker-compose -f  $(COMPOSE_FILE) ps
 
-#logs for debugging errrors
 
 logs:
 	@docker-compose -f  $(COMPOSE_FILE) logs -f
